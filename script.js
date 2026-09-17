@@ -37,6 +37,11 @@ document.querySelectorAll('.product-card, .benefit, .step, .problem-item').forEa
 const discountWheel = document.getElementById("discountWheel");
 const spinDiscountBtn = document.getElementById("spinDiscountBtn");
 const discountResult = document.getElementById("discountResult");
+const wheelModal = document.getElementById("wheelModal");
+const modalTitle = document.getElementById("modalTitle");
+const couponCode = document.getElementById("couponCode");
+const closeWheelModal = document.getElementById("closeWheelModal");
+const claimDiscountLink = document.getElementById("claimDiscountLink");
 
 if (discountWheel && spinDiscountBtn && discountResult) {
 
@@ -44,12 +49,41 @@ if (discountWheel && spinDiscountBtn && discountResult) {
   let currentRotation = 0;
 
   const offers = [
-    "GH₵80 OFF",
-    "GH₵60 OFF",
-    "GH₵40 OFF",
-    "GH₵20 OFF",
-    "FREE TRY"
+    { label: "GH₵80 OFF", code: "GROW80" },
+    { label: "GH₵60 OFF", code: "GROW60" },
+    { label: "GH₵40 OFF", code: "GROW40" },
+    { label: "GH₵20 OFF", code: "GROW20" },
+    { label: "FREE TRY", code: "GROWTRY" }
   ];
+
+  function showWinner(result) {
+    if (modalTitle) modalTitle.textContent = `You unlocked ${result.label}!`;
+    if (couponCode) couponCode.textContent = result.code;
+    if (claimDiscountLink) {
+      claimDiscountLink.setAttribute("aria-label", `Claim ${result.label}`);
+    }
+    if (wheelModal) {
+      wheelModal.classList.add("active");
+      wheelModal.setAttribute("aria-hidden", "false");
+    }
+  }
+
+  function hideWinner() {
+    if (wheelModal) {
+      wheelModal.classList.remove("active");
+      wheelModal.setAttribute("aria-hidden", "true");
+    }
+  }
+
+  if (closeWheelModal) {
+    closeWheelModal.addEventListener("click", hideWinner);
+  }
+
+  if (wheelModal) {
+    wheelModal.addEventListener("click", (event) => {
+      if (event.target === wheelModal) hideWinner();
+    });
+  }
 
   spinDiscountBtn.addEventListener("click", function () {
 
@@ -57,6 +91,7 @@ if (discountWheel && spinDiscountBtn && discountResult) {
 
     spinning = true;
     spinDiscountBtn.disabled = true;
+    hideWinner();
 
     discountResult.textContent = "Spinning... 🎉";
 
@@ -72,8 +107,9 @@ if (discountWheel && spinDiscountBtn && discountResult) {
     setTimeout(() => {
       const result = offers[randomIndex];
 
-      discountResult.innerHTML = `🎉 You unlocked <strong>${result}</strong>!`;
+      discountResult.innerHTML = `🎉 You unlocked <strong>${result.label}</strong>!`;
       spinDiscountBtn.textContent = "DISCOUNT UNLOCKED ✓";
+      showWinner(result);
       spinning = false;
     }, 4200);
 
