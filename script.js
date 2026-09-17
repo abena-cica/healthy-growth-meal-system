@@ -30,3 +30,63 @@ document.querySelectorAll('.product-card, .benefit, .step, .problem-item').forEa
   el.classList.add('reveal');
   observer.observe(el);
 });
+/* =========================================
+   DISCOUNT WHEEL
+========================================= */
+
+const discountWheel = document.getElementById("discountWheel");
+const discountSpinBtn = document.getElementById("discountSpinBtn");
+const discountWheelResult = document.getElementById("discountWheelResult");
+
+if (discountWheel && discountSpinBtn) {
+
+  let spinning = false;
+  let currentRotation = 0;
+
+  const offers = [
+    "GH₵80 OFF",
+    "GH₵60 OFF",
+    "GH₵40 OFF",
+    "GH₵20 OFF",
+    "FREE TRY"
+  ];
+
+  discountSpinBtn.addEventListener("click", function () {
+
+    if (spinning) return;
+
+    spinning = true;
+    discountSpinBtn.disabled = true;
+
+    discountWheelResult.textContent = "Spinning... 🎉";
+
+    const randomIndex =
+      Math.floor(Math.random() * offers.length);
+
+    const segmentAngle = 72;
+
+    const targetAngle =
+      360 - (randomIndex * segmentAngle + segmentAngle / 2);
+
+    currentRotation +=
+      360 * 6 + targetAngle;
+
+    discountWheel.style.transform =
+      `rotate(${currentRotation}deg)`;
+
+    setTimeout(() => {
+
+      const result = offers[randomIndex];
+
+      discountWheelResult.innerHTML =
+        `🎉 You unlocked <strong>${result}</strong>!`;
+
+      discountSpinBtn.textContent = "DISCOUNT UNLOCKED ✓";
+
+      spinning = false;
+
+    }, 4200);
+
+  });
+
+}
