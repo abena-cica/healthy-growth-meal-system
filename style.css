@@ -37,6 +37,14 @@ h2{font-size:clamp(36px,4vw,52px);margin:10px 0 18px}
 .secondary{border:1px solid var(--border);background:white;color:var(--dark)}
 .yellow{background:var(--yellow);color:#102418;box-shadow:0 15px 35px rgba(248,191,36,.25)}
 .full{width:100%;margin-top:20px}
+.urgency-strip{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:rgba(248,191,36,.12);border:1px solid rgba(248,191,36,.35);color:var(--dark);font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;margin-bottom:18px;width:fit-content}
+.urgency-strip span:nth-child(2n){color:var(--green2)}
+.countdown-box{display:inline-flex;flex-direction:column;gap:10px;padding:14px 18px;border-radius:18px;background:rgba(255,255,255,.65);border:1px solid rgba(24,93,50,.12);box-shadow:0 12px 28px rgba(15,62,36,.08);margin-bottom:18px}
+.countdown-label{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--green);text-transform:uppercase}
+.countdown-timer{display:flex;align-items:end;gap:10px}
+.time-unit{min-width:62px;display:flex;flex-direction:column;align-items:center;padding:8px 10px;border-radius:12px;background:var(--dark);color:#fff}
+.time-unit span{font-family:'Playfair Display',serif;font-size:26px;line-height:1;font-weight:800}
+.time-unit small{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-top:4px}
 .mini-trust{display:flex;gap:17px;flex-wrap:wrap;font-size:13px;color:var(--muted);font-weight:600}
 .hero-art{position:relative;display:flex;justify-content:center}
 .hero-art .glow{position:absolute;width:430px;height:430px;border-radius:50%;background:var(--lime);filter:blur(4px);z-index:0}

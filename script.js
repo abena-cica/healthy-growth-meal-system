@@ -30,6 +30,34 @@ document.querySelectorAll('.product-card, .benefit, .step, .problem-item').forEa
   el.classList.add('reveal');
   observer.observe(el);
 });
+
+const countdownHours = document.getElementById('countdown-hours');
+const countdownMinutes = document.getElementById('countdown-minutes');
+const countdownSeconds = document.getElementById('countdown-seconds');
+
+if (countdownHours && countdownMinutes && countdownSeconds) {
+  const offerDeadline = Date.now() + ((6 * 60 * 60) + (19 * 60) + 42) * 1000;
+  let countdownInterval;
+
+  const updateCountdown = () => {
+    const remaining = Math.max(0, offerDeadline - Date.now());
+    const hours = String(Math.floor(remaining / 3600000)).padStart(2, '0');
+    const minutes = String(Math.floor((remaining % 3600000) / 60000)).padStart(2, '0');
+    const seconds = String(Math.floor((remaining % 60000) / 1000)).padStart(2, '0');
+
+    countdownHours.textContent = hours;
+    countdownMinutes.textContent = minutes;
+    countdownSeconds.textContent = seconds;
+
+    if (remaining === 0) {
+      clearInterval(countdownInterval);
+    }
+  };
+
+  updateCountdown();
+  countdownInterval = setInterval(updateCountdown, 1000);
+}
+
 /* =========================================
    DISCOUNT WHEEL
 ========================================= */
