@@ -62,9 +62,9 @@ if (discountWheel && spinDiscountBtn && discountResult) {
   let currentRotation = 0;
 
   const offers = [
-    { label: "GH₵65 OFF", code: "GROW65" },
-    { label: "GH₵55 OFF", code: "GROW55" },
-    { label: "GH₵45 OFF", code: "GROW45" },
+    { label: "GH₵42", code: "GROW42" },
+    { label: "GH₵62", code: "GROW62" },
+    { label: "GH₵72", code: "GROW72" },
     { label: "FREE WIN", code: "GROWFREE" }
   ];
 
