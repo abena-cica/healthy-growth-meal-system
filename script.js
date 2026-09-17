@@ -47,7 +47,7 @@ if (discountWheel && spinDiscountBtn && discountResult) {
 
   const wheelTextNodes = document.querySelectorAll('.wheel-text');
   wheelTextNodes.forEach((label, index) => {
-    const angle = 36 + (index * 72);
+    const angle = 45 + (index * 90);
     const isMobile = window.innerWidth <= 600;
     const distance = isMobile ? 96 : 120;
     const scale = isMobile ? 0.8 : 1;
@@ -58,11 +58,10 @@ if (discountWheel && spinDiscountBtn && discountResult) {
   let currentRotation = 0;
 
   const offers = [
-    { label: "GH₵80 OFF", code: "GROW80" },
-    { label: "GH₵60 OFF", code: "GROW60" },
-    { label: "GH₵40 OFF", code: "GROW40" },
-    { label: "GH₵20 OFF", code: "GROW20" },
-    { label: "FREE TRY", code: "GROWTRY" }
+    { label: "GH₵65 OFF", code: "GROW65" },
+    { label: "GH₵55 OFF", code: "GROW55" },
+    { label: "GH₵45 OFF", code: "GROW45" },
+    { label: "FREE WIN", code: "GROWFREE" }
   ];
 
   function showWinner(result) {
@@ -105,7 +104,7 @@ if (discountWheel && spinDiscountBtn && discountResult) {
     discountResult.textContent = "Spinning... 🎉";
 
     const randomIndex = Math.floor(Math.random() * offers.length);
-    const segmentAngle = 72;
+    const segmentAngle = 90;
     const pointerAngle = 270;
     const segmentCenter = randomIndex * segmentAngle + (segmentAngle / 2);
     const targetAngle = ((pointerAngle - segmentCenter) % 360 + 360) % 360;
