@@ -50,8 +50,10 @@ if (discountWheel && spinDiscountBtn && discountResult) {
     const angle = 45 + (index * 90);
     const isMobile = window.innerWidth <= 600;
     const distance = isMobile ? 96 : 120;
-    const scale = isMobile ? 0.8 : 1;
-    label.style.transform = `rotate(${angle}deg) translateY(-${distance}px) rotate(-${angle}deg) scale(${scale})`;
+    const isFreeSegment = index === wheelTextNodes.length - 1;
+    const scale = isFreeSegment ? 0.86 : (isMobile ? 0.8 : 1);
+    const adjustedDistance = isFreeSegment ? distance - 8 : distance;
+    label.style.transform = `rotate(${angle}deg) translateY(-${adjustedDistance}px) rotate(-${angle}deg) scale(${scale})`;
   });
 
   let spinning = false;
@@ -104,10 +106,17 @@ if (discountWheel && spinDiscountBtn && discountResult) {
     discountResult.textContent = "Spinning... 🎉";
 
     const randomIndex = Math.floor(Math.random() * offers.length);
-    const segmentAngle = 90;
+    const selectedLabel = wheelTextNodes[randomIndex];
+    const wheelRect = discountWheel.getBoundingClientRect();
+    const wheelCenterX = wheelRect.left + (wheelRect.width / 2);
+    const wheelCenterY = wheelRect.top + (wheelRect.height / 2);
+    const selectedRect = selectedLabel.getBoundingClientRect();
+    const selectedCenterX = selectedRect.left + (selectedRect.width / 2);
+    const selectedCenterY = selectedRect.top + (selectedRect.height / 2);
+
+    const selectedAngle = (Math.atan2(selectedCenterY - wheelCenterY, selectedCenterX - wheelCenterX) * 180 / Math.PI + 360) % 360;
     const pointerAngle = 270;
-    const segmentCenter = randomIndex * segmentAngle + (segmentAngle / 2);
-    const targetAngle = ((pointerAngle - segmentCenter) % 360 + 360) % 360;
+    const targetAngle = ((pointerAngle - selectedAngle) % 360 + 360) % 360;
 
     currentRotation += 360 * 6 + targetAngle;
     discountWheel.style.transform = `rotate(${currentRotation}deg)`;
