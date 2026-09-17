@@ -46,13 +46,15 @@ const claimDiscountLink = document.getElementById("claimDiscountLink");
 if (discountWheel && spinDiscountBtn && discountResult) {
 
   const wheelTextNodes = document.querySelectorAll('.wheel-text');
+  const segmentCenters = [50, 150, 250, 330];
+
   wheelTextNodes.forEach((label, index) => {
-    const angle = 45 + (index * 90);
+    const angle = segmentCenters[index] ?? 45 + (index * 90);
     const isMobile = window.innerWidth <= 600;
     const distance = isMobile ? 96 : 120;
     const isFreeSegment = index === wheelTextNodes.length - 1;
-    const scale = isFreeSegment ? 0.86 : (isMobile ? 0.8 : 1);
-    const adjustedDistance = isFreeSegment ? distance - 8 : distance;
+    const scale = isFreeSegment ? 0.88 : (isMobile ? 0.8 : 1);
+    const adjustedDistance = isFreeSegment ? distance - 4 : distance;
     label.style.transform = `rotate(${angle}deg) translateY(-${adjustedDistance}px) rotate(-${angle}deg) scale(${scale})`;
   });
 
