@@ -35,10 +35,10 @@ document.querySelectorAll('.product-card, .benefit, .step, .problem-item').forEa
 ========================================= */
 
 const discountWheel = document.getElementById("discountWheel");
-const discountSpinBtn = document.getElementById("discountSpinBtn");
-const discountWheelResult = document.getElementById("discountWheelResult");
+const spinDiscountBtn = document.getElementById("spinDiscountBtn");
+const discountResult = document.getElementById("discountResult");
 
-if (discountWheel && discountSpinBtn) {
+if (discountWheel && spinDiscountBtn && discountResult) {
 
   let spinning = false;
   let currentRotation = 0;
@@ -51,40 +51,30 @@ if (discountWheel && discountSpinBtn) {
     "FREE TRY"
   ];
 
-  discountSpinBtn.addEventListener("click", function () {
+  spinDiscountBtn.addEventListener("click", function () {
 
     if (spinning) return;
 
     spinning = true;
-    discountSpinBtn.disabled = true;
+    spinDiscountBtn.disabled = true;
 
-    discountWheelResult.textContent = "Spinning... 🎉";
+    discountResult.textContent = "Spinning... 🎉";
 
-    const randomIndex =
-      Math.floor(Math.random() * offers.length);
-
+    const randomIndex = Math.floor(Math.random() * offers.length);
     const segmentAngle = 72;
+    const pointerAngle = 270;
+    const segmentCenter = randomIndex * segmentAngle + (segmentAngle / 2);
+    const targetAngle = ((pointerAngle - segmentCenter) % 360 + 360) % 360;
 
-    const targetAngle =
-      360 - (randomIndex * segmentAngle + segmentAngle / 2);
-
-    currentRotation +=
-      360 * 6 + targetAngle;
-
-    discountWheel.style.transform =
-      `rotate(${currentRotation}deg)`;
+    currentRotation += 360 * 6 + targetAngle;
+    discountWheel.style.transform = `rotate(${currentRotation}deg)`;
 
     setTimeout(() => {
-
       const result = offers[randomIndex];
 
-      discountWheelResult.innerHTML =
-        `🎉 You unlocked <strong>${result}</strong>!`;
-
-      discountSpinBtn.textContent = "DISCOUNT UNLOCKED ✓";
-
+      discountResult.innerHTML = `🎉 You unlocked <strong>${result}</strong>!`;
+      spinDiscountBtn.textContent = "DISCOUNT UNLOCKED ✓";
       spinning = false;
-
     }, 4200);
 
   });
