@@ -35,8 +35,6 @@ const offerPopup = document.getElementById('offerPopup');
 const closeOfferPopup = document.getElementById('closeOfferPopup');
 
 if (offerPopup) {
-  const hasSeenOfferPopup = localStorage.getItem('healthyGrowthOfferPopupSeen');
-
   const openPopup = () => {
     document.body.classList.add('offer-popup-open');
     offerPopup.classList.add('show');
@@ -45,14 +43,11 @@ if (offerPopup) {
   const closePopup = () => {
     document.body.classList.remove('offer-popup-open');
     offerPopup.classList.remove('show');
-    localStorage.setItem('healthyGrowthOfferPopupSeen', 'true');
   };
 
-  if (!hasSeenOfferPopup) {
-    setTimeout(() => {
-      openPopup();
-    }, 500);
-  }
+  setTimeout(() => {
+    openPopup();
+  }, 500);
 
   if (closeOfferPopup) {
     closeOfferPopup.addEventListener('click', closePopup);
