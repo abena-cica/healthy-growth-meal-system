@@ -31,6 +31,38 @@ document.querySelectorAll('.product-card, .benefit, .step, .problem-item').forEa
   observer.observe(el);
 });
 
+const offerPopup = document.getElementById('offerPopup');
+const closeOfferPopup = document.getElementById('closeOfferPopup');
+
+if (offerPopup) {
+  const hasSeenOfferPopup = localStorage.getItem('healthyGrowthOfferPopupSeen');
+
+  const openPopup = () => {
+    document.body.classList.add('offer-popup-open');
+    offerPopup.classList.add('show');
+  };
+
+  const closePopup = () => {
+    document.body.classList.remove('offer-popup-open');
+    offerPopup.classList.remove('show');
+    localStorage.setItem('healthyGrowthOfferPopupSeen', 'true');
+  };
+
+  if (!hasSeenOfferPopup) {
+    setTimeout(() => {
+      openPopup();
+    }, 500);
+  }
+
+  if (closeOfferPopup) {
+    closeOfferPopup.addEventListener('click', closePopup);
+  }
+
+  offerPopup.addEventListener('click', (event) => {
+    if (event.target === offerPopup) closePopup();
+  });
+}
+
 const countdownHours = document.getElementById('countdown-hours');
 const countdownMinutes = document.getElementById('countdown-minutes');
 const countdownSeconds = document.getElementById('countdown-seconds');
