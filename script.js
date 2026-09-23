@@ -123,6 +123,11 @@ if (discountWheel && spinDiscountBtn && discountResult) {
     { label: "FREE", code: "GROWFREE" }
   ];
 
+  function resetWheelToStart() {
+    currentRotation = 0;
+    discountWheel.style.transform = "rotate(0deg)";
+  }
+
   function showWinner(result) {
     if (modalTitle) modalTitle.textContent = `You unlocked ${result.label}!`;
     if (couponCode) couponCode.textContent = result.code;
@@ -159,6 +164,7 @@ if (discountWheel && spinDiscountBtn && discountResult) {
     spinning = true;
     spinDiscountBtn.disabled = true;
     hideWinner();
+    resetWheelToStart();
 
     discountResult.textContent = "Spinning... 🎉";
 
@@ -183,6 +189,7 @@ if (discountWheel && spinDiscountBtn && discountResult) {
 
       discountResult.innerHTML = `🎉 You unlocked <strong>${result.label}</strong>!`;
       spinDiscountBtn.textContent = "DISCOUNT UNLOCKED ✓";
+      resetWheelToStart();
       showWinner(result);
       spinning = false;
     }, 4200);
