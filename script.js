@@ -407,29 +407,87 @@ if (offerPopup) {
   });
 
 }
-// Copy discount code
-const copyButton = document.getElementById("copyDiscountCodeBtn");
-const codeValue = document.getElementById("discountCodeValue");
+// =========================================
+// COPY DISCOUNT CODE
+// =========================================
 
-if (copyButton && codeValue) {
-  copyButton.addEventListener("click", async function () {
-    const code = codeValue.textContent.trim();
+const copyDiscountCodeBtn = document.getElementById("copyDiscountCodeBtn");
+const discountCodeValue = document.getElementById("discountCodeValue");
+
+if (copyDiscountCodeBtn && discountCodeValue) {
+
+  copyDiscountCodeBtn.addEventListener("click", async function (event) {
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    const code = discountCodeValue.textContent.trim();
+
+    if (!code) {
+      return;
+    }
 
     try {
-      await navigator.clipboard.writeText(code);
 
-      copyButton.textContent = "Copied!";
+      // Try modern clipboard first
+      if (navigator.clipboard && window.isSecureContext) {
 
-      setTimeout(() => {
-        copyButton.textContent = "Copy";
+        await navigator.clipboard.writeText(code);
+
+      } else {
+
+        // Fallback for browsers where Clipboard API isn't available
+        const textArea = document.createElement("textarea");
+
+        textArea.value = code;
+        textArea.setAttribute("readonly", "");
+        textArea.style.position = "fixed";
+        textArea.style.left = "-9999px";
+        textArea.style.top = "0";
+        textArea.style.opacity = "0";
+
+        document.body.appendChild(textArea);
+
+        textArea.focus();
+        textArea.select();
+        textArea.setSelectionRange(0, textArea.value.length);
+
+        const copied = document.execCommand("copy");
+
+        document.body.removeChild(textArea);
+
+        if (!copied) {
+          throw new Error("Copy command failed");
+        }
+      }
+
+      // Success
+      copyDiscountCodeBtn.textContent = "Copied ✓";
+
+      setTimeout(function () {
+        copyDiscountCodeBtn.textContent = "Copy";
       }, 2000);
 
     } catch (error) {
-      copyButton.textContent = "Copy failed";
 
-      setTimeout(() => {
-        copyButton.textContent = "Copy";
-      }, 2000);
+      console.error("Copy failed:", error);
+
+      // Select the code for manual copying
+      const range = document.createRange();
+      range.selectNodeContents(discountCodeValue);
+
+      const selection = window.getSelection();
+
+      selection.removeAllRanges();
+      selection.addRange(range);
+
+      copyDiscountCodeBtn.textContent = "Select Code";
+
+      setTimeout(function () {
+        copyDiscountCodeBtn.textContent = "Copy";
+      }, 2500);
     }
+
   });
+
 }
