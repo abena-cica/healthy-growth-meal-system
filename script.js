@@ -41,9 +41,7 @@ if (offerPopup) {
     offerPopup.classList.add('show');
 
     if (discountWheelSection) {
-      setTimeout(() => {
-        discountWheelSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 350);
+      discountWheelSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   };
 
@@ -72,7 +70,7 @@ if (offerPopup) {
           wheelObserver.disconnect();
         }
       });
-    }, { threshold: 0.45 });
+    }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
 
     wheelObserver.observe(discountWheelSection);
   }
