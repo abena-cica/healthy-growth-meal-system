@@ -36,25 +36,30 @@ const closeOfferPopup = document.getElementById('closeOfferPopup');
 const discountWheelSection = document.querySelector('.discount-wheel-section');
 
 if (offerPopup) {
+  let popupIsOpen = false;
+
   const closePopup = () => {
+    popupIsOpen = false;
     document.body.classList.remove('offer-popup-open');
     offerPopup.classList.remove('show');
   };
 
   const handleWheelReach = () => {
+    if (!popupIsOpen) return;
     closePopup();
-    if (discountWheelSection) {
-      discountWheelSection.scrollIntoView({ behavior: 'auto', block: 'center' });
-    }
   };
 
   const openPopup = () => {
+    popupIsOpen = true;
     document.body.classList.add('offer-popup-open');
     offerPopup.classList.add('show');
 
-    if (discountWheelSection) {
-      discountWheelSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
+    setTimeout(() => {
+      if (!popupIsOpen) return;
+      if (discountWheelSection) {
+        discountWheelSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 250);
   };
 
   setTimeout(() => {
@@ -128,15 +133,7 @@ const copyDiscountCodeBtn = document.getElementById("copyDiscountCodeBtn");
 
 if (discountWheel && spinDiscountBtn && discountResult) {
 
-  const wheelTextNodes = document.querySelectorAll('.wheel-text');
-
-  wheelTextNodes.forEach((label) => {
-    label.style.position = 'absolute';
-    label.style.left = '50%';
-    label.style.top = '50%';
-    label.style.transformOrigin = 'center center';
-    label.style.whiteSpace = 'nowrap';
-  });
+  const segmentCenterAngles = [45, 135, 225, 315];
 
   let spinning = false;
   let currentRotation = 0;
@@ -275,15 +272,7 @@ if (discountWheel && spinDiscountBtn && discountResult) {
     discountResult.textContent = "Spinning... 🎉";
 
     const randomIndex = Math.floor(Math.random() * offers.length);
-    const selectedLabel = wheelTextNodes[randomIndex];
-    const wheelRect = discountWheel.getBoundingClientRect();
-    const wheelCenterX = wheelRect.left + (wheelRect.width / 2);
-    const wheelCenterY = wheelRect.top + (wheelRect.height / 2);
-    const selectedRect = selectedLabel.getBoundingClientRect();
-    const selectedCenterX = selectedRect.left + (selectedRect.width / 2);
-    const selectedCenterY = selectedRect.top + (selectedRect.height / 2);
-
-    const selectedAngle = (Math.atan2(selectedCenterY - wheelCenterY, selectedCenterX - wheelCenterX) * 180 / Math.PI + 360) % 360;
+    const selectedAngle = segmentCenterAngles[randomIndex];
     const pointerAngle = 270;
     const targetAngle = ((pointerAngle - selectedAngle) % 360 + 360) % 360;
 
