@@ -191,6 +191,10 @@ if (discountWheel && spinDiscountBtn && discountResult) {
     if (copyDiscountCodeBtn) {
       copyDiscountCodeBtn.textContent = "Copy";
     }
+    const wheelBuyNowBtn = document.getElementById("wheelBuyNowBtn");
+    if (wheelBuyNowBtn) {
+      wheelBuyNowBtn.hidden = false;
+    }
   }
 
   if (closeWheelModal) {
