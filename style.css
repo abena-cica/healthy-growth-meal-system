@@ -99,6 +99,7 @@ h2{font-size:clamp(36px,4vw,52px);margin:10px 0 18px}
 .discount-code-row strong{font-size:1.2rem;letter-spacing:.08em;color:#0f3e24;display:block;}
 .copy-code-btn{border:none;border-radius:999px;padding:8px 12px;background:#0f3e24;color:#fff;font-size:12px;font-weight:800;cursor:pointer;transition:opacity .2s ease;}
 .copy-code-btn:hover{opacity:.92;}
+.wheel-buy-btn{margin-top:18px;display:inline-flex;justify-content:center;align-items:center;width:100%;font-size:14px;letter-spacing:.04em;}
 body.offer-popup-open main,
 body.offer-popup-open .header,
 body.offer-popup-open footer,

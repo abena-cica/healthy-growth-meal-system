@@ -145,6 +145,29 @@ if (discountWheel && spinDiscountBtn && discountResult) {
   let spinning = false;
   let currentRotation = 0;
   let wheelAlreadyUsed = localStorage.getItem("healthyGrowthWheelUsed") === "true";
+  const oneClientAccessCode = "ONE_CLIENT_ACCESS";
+
+  const enableWheelForOneClient = () => {
+    const activationKey = "healthyGrowthWheelAccessEnabled";
+    const isEnabled = localStorage.getItem(activationKey) === "true";
+
+    if (isEnabled) return true;
+
+    const response = window.prompt(
+      "To enable this discount wheel for one client only, type: ONE_CLIENT_ACCESS",
+      ""
+    );
+
+    if (response && response.trim().toUpperCase() === oneClientAccessCode) {
+      localStorage.setItem(activationKey, "true");
+      return true;
+    }
+
+    spinDiscountBtn.disabled = true;
+    spinDiscountBtn.textContent = "ACCESS LOCKED";
+    discountResult.textContent = "Admin access required before this wheel can be used.";
+    return false;
+  };
 
   const offers = [
     { label: "GH₵60", code: "GROW60" },
@@ -195,6 +218,10 @@ if (discountWheel && spinDiscountBtn && discountResult) {
     if (wheelBuyNowBtn) {
       wheelBuyNowBtn.hidden = false;
     }
+  }
+
+  if (!enableWheelForOneClient()) {
+    return;
   }
 
   if (closeWheelModal) {
