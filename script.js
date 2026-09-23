@@ -135,6 +135,7 @@ if (discountWheel && spinDiscountBtn && discountResult) {
 
   let spinning = false;
   let currentRotation = 0;
+  let wheelAlreadyUsed = localStorage.getItem("healthyGrowthWheelUsed") === "true";
 
   const offers = [
     { label: "GH₵60", code: "GROW60" },
@@ -142,6 +143,14 @@ if (discountWheel && spinDiscountBtn && discountResult) {
     { label: "GH₵50", code: "GROW50" },
     { label: "FREE", code: "GROWFREE" }
   ];
+
+  function lockWheelAfterUse() {
+    wheelAlreadyUsed = true;
+    localStorage.setItem("healthyGrowthWheelUsed", "true");
+    spinDiscountBtn.disabled = true;
+    spinDiscountBtn.textContent = "DISCOUNT UNLOCKED ✓";
+    discountResult.textContent = "You already unlocked your discount.";
+  }
 
   function resetWheelToStart() {
     currentRotation = 0;
@@ -177,9 +186,13 @@ if (discountWheel && spinDiscountBtn && discountResult) {
     });
   }
 
+  if (wheelAlreadyUsed) {
+    lockWheelAfterUse();
+  }
+
   spinDiscountBtn.addEventListener("click", function () {
 
-    if (spinning) return;
+    if (spinning || wheelAlreadyUsed) return;
 
     spinning = true;
     spinDiscountBtn.disabled = true;
@@ -209,6 +222,7 @@ if (discountWheel && spinDiscountBtn && discountResult) {
 
       discountResult.innerHTML = `🎉 You unlocked <strong>${result.label}</strong>!`;
       spinDiscountBtn.textContent = "DISCOUNT UNLOCKED ✓";
+      lockWheelAfterUse();
       resetWheelToStart();
       showWinner(result);
       spinning = false;
