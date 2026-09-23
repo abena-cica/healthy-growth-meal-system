@@ -36,18 +36,26 @@ const closeOfferPopup = document.getElementById('closeOfferPopup');
 const discountWheelSection = document.querySelector('.discount-wheel-section');
 
 if (offerPopup) {
+  const closePopup = () => {
+    document.body.classList.remove('offer-popup-open');
+    offerPopup.classList.remove('show');
+  };
+
+  const handleWheelReach = () => {
+    closePopup();
+    if (discountWheelSection) {
+      discountWheelSection.scrollIntoView({ behavior: 'auto', block: 'center' });
+    }
+  };
+
   const openPopup = () => {
     document.body.classList.add('offer-popup-open');
     offerPopup.classList.add('show');
 
     if (discountWheelSection) {
       discountWheelSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(handleWheelReach, 650);
     }
-  };
-
-  const closePopup = () => {
-    document.body.classList.remove('offer-popup-open');
-    offerPopup.classList.remove('show');
   };
 
   setTimeout(() => {
@@ -66,11 +74,11 @@ if (offerPopup) {
     const wheelObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          closePopup();
+          handleWheelReach();
           wheelObserver.disconnect();
         }
       });
-    }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
+    }, { threshold: 0.2, rootMargin: '0px 0px -5% 0px' });
 
     wheelObserver.observe(discountWheelSection);
   }
