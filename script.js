@@ -129,16 +129,13 @@ const copyDiscountCodeBtn = document.getElementById("copyDiscountCodeBtn");
 if (discountWheel && spinDiscountBtn && discountResult) {
 
   const wheelTextNodes = document.querySelectorAll('.wheel-text');
-  const segmentCenters = [50, 150, 250, 330];
 
-  wheelTextNodes.forEach((label, index) => {
-    const angle = segmentCenters[index] ?? 45 + (index * 90);
-    const isMobile = window.innerWidth <= 600;
-    const distance = isMobile ? 96 : 120;
-    const isFreeSegment = index === wheelTextNodes.length - 1;
-    const scale = isFreeSegment ? 0.88 : (isMobile ? 0.8 : 1);
-    const adjustedDistance = isFreeSegment ? distance - 4 : distance;
-    label.style.transform = `rotate(${angle}deg) translateY(-${adjustedDistance}px) rotate(-${angle}deg) scale(${scale})`;
+  wheelTextNodes.forEach((label) => {
+    label.style.position = 'absolute';
+    label.style.left = '50%';
+    label.style.top = '50%';
+    label.style.transformOrigin = 'center center';
+    label.style.whiteSpace = 'nowrap';
   });
 
   let spinning = false;
