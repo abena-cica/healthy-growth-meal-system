@@ -311,6 +311,71 @@ if (discountWheel && spinDiscountBtn && discountResult) {
 
 }
 // =========================================
+// MOBILE DISCOUNT CODE COPY
+// =========================================
+
+const mobileCopyButton = document.getElementById("copyDiscountCodeBtn");
+const mobileDiscountCode = document.getElementById("discountCodeValue");
+
+if (mobileCopyButton && mobileDiscountCode) {
+
+  mobileCopyButton.addEventListener("click", async function () {
+
+    const code = mobileDiscountCode.textContent.trim();
+
+    if (!code) return;
+
+    try {
+
+      if (navigator.clipboard && window.isSecureContext) {
+
+        await navigator.clipboard.writeText(code);
+
+      } else {
+
+        const input = document.createElement("input");
+
+        input.value = code;
+        input.setAttribute("readonly", "");
+        input.style.position = "fixed";
+        input.style.opacity = "0";
+        input.style.pointerEvents = "none";
+
+        document.body.appendChild(input);
+
+        input.focus();
+        input.select();
+        input.setSelectionRange(0, input.value.length);
+
+        document.execCommand("copy");
+
+        document.body.removeChild(input);
+      }
+
+      mobileCopyButton.textContent = "Copied ✓";
+
+      setTimeout(function () {
+        mobileCopyButton.textContent = "Copy";
+      }, 2000);
+
+    } catch (error) {
+
+      console.error("Copy failed:", error);
+
+      mobileCopyButton.textContent = "Select Code";
+
+      const range = document.createRange();
+      range.selectNodeContents(mobileDiscountCode);
+
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+
+  });
+
+}
+// =========================================
 // WELCOME DISCOUNT POPUP
 // =========================================
 
@@ -342,4 +407,3 @@ if (offerPopup) {
   });
 
 }
-
