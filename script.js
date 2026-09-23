@@ -148,87 +148,7 @@ if (discountWheel && spinDiscountBtn && discountResult) {
   function showCouponCode(result) {
     if (discountCodeBox) discountCodeBox.hidden = false;
     if (discountCodeValue) discountCodeValue.textContent = result.code;
-   if (copyDiscountCodeBtn) {
-
-  copyDiscountCodeBtn.addEventListener("click", async function () {
-
-    if (!discountCodeValue) return;
-
-    const textToCopy = discountCodeValue.textContent.trim();
-
-    try {
-
-      // Modern browsers — including supported mobile browsers
-      if (navigator.clipboard && window.isSecureContext) {
-
-        await navigator.clipboard.writeText(textToCopy);
-
-      } else {
-
-        // Mobile-friendly fallback
-        const textArea = document.createElement("textarea");
-
-        textArea.value = textToCopy;
-
-        textArea.style.position = "fixed";
-        textArea.style.left = "0";
-        textArea.style.top = "0";
-        textArea.style.width = "1px";
-        textArea.style.height = "1px";
-        textArea.style.padding = "0";
-        textArea.style.border = "none";
-        textArea.style.outline = "none";
-        textArea.style.boxShadow = "none";
-        textArea.style.background = "transparent";
-        textArea.style.opacity = "0";
-
-        document.body.appendChild(textArea);
-
-        // Important for mobile browsers
-        textArea.focus();
-        textArea.select();
-        textArea.setSelectionRange(0, textArea.value.length);
-
-        const successful = document.execCommand("copy");
-
-        document.body.removeChild(textArea);
-
-        if (!successful) {
-          throw new Error("Copy command failed");
-        }
-      }
-
-      // Success
-      copyDiscountCodeBtn.textContent = "Copied! ✓";
-
-      setTimeout(() => {
-        copyDiscountCodeBtn.textContent = "Copy";
-      }, 2000);
-
-    } catch (error) {
-
-      console.error("Copy failed:", error);
-
-      copyDiscountCodeBtn.textContent = "Tap to copy";
-
-      // Final fallback: select the code so the user can copy it manually
-      if (discountCodeValue) {
-
-        const selection = window.getSelection();
-        const range = document.createRange();
-
-        range.selectNodeContents(discountCodeValue);
-
-        selection.removeAllRanges();
-        selection.addRange(range);
-      }
-
-    }
-
-  });
-
-}
-
+  }
   if (!enableWheelForOneClient()) {
     return;
   }
@@ -238,7 +158,7 @@ if (discountWheel && spinDiscountBtn && discountResult) {
   }
 
   if (copyDiscountCodeBtn) {
-    copyDiscountCodeBtn.addEventListener("click", async () => {
+    copyDiscountCodeBtn.onclick = async () => {
       if (!discountCodeValue) return;
 
       const textToCopy = discountCodeValue.textContent.trim();
@@ -309,88 +229,5 @@ if (discountWheel && spinDiscountBtn && discountResult) {
 
   });
 
-  } 
-  // =========================================
-// COPY DISCOUNT CODE
-// =========================================
+  }
 
-const copyDiscountCodeBtn = document.getElementById("copyDiscountCodeBtn");
-const discountCodeValue = document.getElementById("discountCodeValue");
-
-if (copyDiscountCodeBtn && discountCodeValue) {
-
-  copyDiscountCodeBtn.addEventListener("click", async function (event) {
-
-    event.preventDefault();
-    event.stopPropagation();
-
-    const code = discountCodeValue.textContent.trim();
-
-    if (!code) {
-      return;
-    }
-
-    try {
-
-      // Try modern clipboard first
-      if (navigator.clipboard && window.isSecureContext) {
-
-        await navigator.clipboard.writeText(code);
-
-      } else {
-
-        // Fallback for browsers where Clipboard API isn't available
-        const textArea = document.createElement("textarea");
-
-        textArea.value = code;
-        textArea.setAttribute("readonly", "");
-        textArea.style.position = "fixed";
-        textArea.style.left = "-9999px";
-        textArea.style.top = "0";
-        textArea.style.opacity = "0";
-
-        document.body.appendChild(textArea);
-
-        textArea.focus();
-        textArea.select();
-        textArea.setSelectionRange(0, textArea.value.length);
-
-        const copied = document.execCommand("copy");
-
-        document.body.removeChild(textArea);
-
-        if (!copied) {
-          throw new Error("Copy command failed");
-        }
-      }
-
-      // Success
-      copyDiscountCodeBtn.textContent = "Copied ✓";
-
-      setTimeout(function () {
-        copyDiscountCodeBtn.textContent = "Copy";
-      }, 2000);
-
-    } catch (error) {
-
-      console.error("Copy failed:", error);
-
-      // Select the code for manual copying
-      const range = document.createRange();
-      range.selectNodeContents(discountCodeValue);
-
-      const selection = window.getSelection();
-
-      selection.removeAllRanges();
-      selection.addRange(range);
-
-      copyDiscountCodeBtn.textContent = "Select Code";
-
-      setTimeout(function () {
-        copyDiscountCodeBtn.textContent = "Copy";
-      }, 2500);
-    }
-
-  });
-
-}
