@@ -407,3 +407,29 @@ if (offerPopup) {
   });
 
 }
+// Copy discount code
+const copyButton = document.getElementById("copyDiscountCodeBtn");
+const codeValue = document.getElementById("discountCodeValue");
+
+if (copyButton && codeValue) {
+  copyButton.addEventListener("click", async function () {
+    const code = codeValue.textContent.trim();
+
+    try {
+      await navigator.clipboard.writeText(code);
+
+      copyButton.textContent = "Copied!";
+
+      setTimeout(() => {
+        copyButton.textContent = "Copy";
+      }, 2000);
+
+    } catch (error) {
+      copyButton.textContent = "Copy failed";
+
+      setTimeout(() => {
+        copyButton.textContent = "Copy";
+      }, 2000);
+    }
+  });
+}
