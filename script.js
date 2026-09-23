@@ -54,7 +54,6 @@ if (offerPopup) {
 
     if (discountWheelSection) {
       discountWheelSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      setTimeout(handleWheelReach, 650);
     }
   };
 
@@ -232,8 +231,24 @@ if (discountWheel && spinDiscountBtn && discountResult) {
     copyDiscountCodeBtn.addEventListener("click", async () => {
       if (!discountCodeValue) return;
 
+      const textToCopy = discountCodeValue.textContent.trim();
+
       try {
-        await navigator.clipboard.writeText(discountCodeValue.textContent.trim());
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(textToCopy);
+        } else {
+          const tempTextArea = document.createElement("textarea");
+          tempTextArea.value = textToCopy;
+          tempTextArea.setAttribute("readonly", "");
+          tempTextArea.style.position = "fixed";
+          tempTextArea.style.top = "-9999px";
+          tempTextArea.style.left = "-9999px";
+          document.body.appendChild(tempTextArea);
+          tempTextArea.select();
+          document.execCommand("copy");
+          document.body.removeChild(tempTextArea);
+        }
+
         copyDiscountCodeBtn.textContent = "Copied!";
       } catch (error) {
         copyDiscountCodeBtn.textContent = "Copy failed";
