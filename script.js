@@ -33,11 +33,18 @@ document.querySelectorAll('.product-card, .benefit, .step, .problem-item').forEa
 
 const offerPopup = document.getElementById('offerPopup');
 const closeOfferPopup = document.getElementById('closeOfferPopup');
+const discountWheelSection = document.querySelector('.discount-wheel-section');
 
 if (offerPopup) {
   const openPopup = () => {
     document.body.classList.add('offer-popup-open');
     offerPopup.classList.add('show');
+
+    if (discountWheelSection) {
+      setTimeout(() => {
+        discountWheelSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 350);
+    }
   };
 
   const closePopup = () => {
@@ -56,6 +63,19 @@ if (offerPopup) {
   offerPopup.addEventListener('click', (event) => {
     if (event.target === offerPopup) closePopup();
   });
+
+  if (discountWheelSection) {
+    const wheelObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          closePopup();
+          wheelObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.45 });
+
+    wheelObserver.observe(discountWheelSection);
+  }
 }
 
 const countdownHours = document.getElementById('countdown-hours');
