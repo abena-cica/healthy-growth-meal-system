@@ -31,62 +31,6 @@ document.querySelectorAll('.product-card, .benefit, .step, .problem-item').forEa
   observer.observe(el);
 });
 
-const offerPopup = document.getElementById('offerPopup');
-const closeOfferPopup = document.getElementById('closeOfferPopup');
-const discountWheelSection = document.querySelector('.discount-wheel-section');
-
-if (offerPopup) {
-  let popupIsOpen = false;
-
-  const closePopup = () => {
-    popupIsOpen = false;
-    document.body.classList.remove('offer-popup-open');
-    offerPopup.classList.remove('show');
-  };
-
-  const handleWheelReach = () => {
-    if (!popupIsOpen) return;
-    closePopup();
-  };
-
-  const openPopup = () => {
-    popupIsOpen = true;
-    document.body.classList.add('offer-popup-open');
-    offerPopup.classList.add('show');
-
-    setTimeout(() => {
-      if (!popupIsOpen) return;
-      if (discountWheelSection) {
-        discountWheelSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    }, 250);
-  };
-
-  setTimeout(() => {
-    openPopup();
-  }, 500);
-
-  if (closeOfferPopup) {
-    closeOfferPopup.addEventListener('click', closePopup);
-  }
-
-  offerPopup.addEventListener('click', (event) => {
-    if (event.target === offerPopup) closePopup();
-  });
-
-  if (discountWheelSection) {
-    const wheelObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          handleWheelReach();
-          wheelObserver.disconnect();
-        }
-      });
-    }, { threshold: 0.2, rootMargin: '0px 0px -5% 0px' });
-
-    wheelObserver.observe(discountWheelSection);
-  }
-}
 
 const countdownHours = document.getElementById('countdown-hours');
 const countdownMinutes = document.getElementById('countdown-minutes');
@@ -204,14 +148,86 @@ if (discountWheel && spinDiscountBtn && discountResult) {
   function showCouponCode(result) {
     if (discountCodeBox) discountCodeBox.hidden = false;
     if (discountCodeValue) discountCodeValue.textContent = result.code;
-    if (copyDiscountCodeBtn) {
-      copyDiscountCodeBtn.textContent = "Copy";
+   if (copyDiscountCodeBtn) {
+
+  copyDiscountCodeBtn.addEventListener("click", async function () {
+
+    if (!discountCodeValue) return;
+
+    const textToCopy = discountCodeValue.textContent.trim();
+
+    try {
+
+      // Modern browsers — including supported mobile browsers
+      if (navigator.clipboard && window.isSecureContext) {
+
+        await navigator.clipboard.writeText(textToCopy);
+
+      } else {
+
+        // Mobile-friendly fallback
+        const textArea = document.createElement("textarea");
+
+        textArea.value = textToCopy;
+
+        textArea.style.position = "fixed";
+        textArea.style.left = "0";
+        textArea.style.top = "0";
+        textArea.style.width = "1px";
+        textArea.style.height = "1px";
+        textArea.style.padding = "0";
+        textArea.style.border = "none";
+        textArea.style.outline = "none";
+        textArea.style.boxShadow = "none";
+        textArea.style.background = "transparent";
+        textArea.style.opacity = "0";
+
+        document.body.appendChild(textArea);
+
+        // Important for mobile browsers
+        textArea.focus();
+        textArea.select();
+        textArea.setSelectionRange(0, textArea.value.length);
+
+        const successful = document.execCommand("copy");
+
+        document.body.removeChild(textArea);
+
+        if (!successful) {
+          throw new Error("Copy command failed");
+        }
+      }
+
+      // Success
+      copyDiscountCodeBtn.textContent = "Copied! ✓";
+
+      setTimeout(() => {
+        copyDiscountCodeBtn.textContent = "Copy";
+      }, 2000);
+
+    } catch (error) {
+
+      console.error("Copy failed:", error);
+
+      copyDiscountCodeBtn.textContent = "Tap to copy";
+
+      // Final fallback: select the code so the user can copy it manually
+      if (discountCodeValue) {
+
+        const selection = window.getSelection();
+        const range = document.createRange();
+
+        range.selectNodeContents(discountCodeValue);
+
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+
     }
-    const wheelBuyNowBtn = document.getElementById("wheelBuyNowBtn");
-    if (wheelBuyNowBtn) {
-      wheelBuyNowBtn.hidden = false;
-    }
-  }
+
+  });
+
+}
 
   if (!enableWheelForOneClient()) {
     return;
@@ -294,3 +310,36 @@ if (discountWheel && spinDiscountBtn && discountResult) {
   });
 
 }
+// =========================================
+// WELCOME DISCOUNT POPUP
+// =========================================
+
+const offerPopup = document.getElementById('offerPopup');
+const closeOfferPopup = document.getElementById('closeOfferPopup');
+
+if (offerPopup) {
+
+  // Show popup immediately when website loads
+  window.addEventListener('load', function () {
+    offerPopup.classList.add('show');
+    document.body.classList.add('offer-popup-open');
+  });
+
+  // Close popup
+  if (closeOfferPopup) {
+    closeOfferPopup.addEventListener('click', function () {
+      offerPopup.classList.remove('show');
+      document.body.classList.remove('offer-popup-open');
+    });
+  }
+
+  // Close when clicking outside popup
+  offerPopup.addEventListener('click', function (event) {
+    if (event.target === offerPopup) {
+      offerPopup.classList.remove('show');
+      document.body.classList.remove('offer-popup-open');
+    }
+  });
+
+}
+
