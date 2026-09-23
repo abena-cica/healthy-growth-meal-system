@@ -117,6 +117,9 @@ const modalTitle = document.getElementById("modalTitle");
 const couponCode = document.getElementById("couponCode");
 const closeWheelModal = document.getElementById("closeWheelModal");
 const claimDiscountLink = document.getElementById("claimDiscountLink");
+const discountCodeBox = document.getElementById("discountCodeBox");
+const discountCodeValue = document.getElementById("discountCodeValue");
+const copyDiscountCodeBtn = document.getElementById("copyDiscountCodeBtn");
 
 if (discountWheel && spinDiscountBtn && discountResult) {
 
@@ -176,8 +179,29 @@ if (discountWheel && spinDiscountBtn && discountResult) {
     }
   }
 
+  function showCouponCode(result) {
+    if (discountCodeBox) discountCodeBox.hidden = false;
+    if (discountCodeValue) discountCodeValue.textContent = result.code;
+    if (copyDiscountCodeBtn) {
+      copyDiscountCodeBtn.textContent = "Copy";
+    }
+  }
+
   if (closeWheelModal) {
     closeWheelModal.addEventListener("click", hideWinner);
+  }
+
+  if (copyDiscountCodeBtn) {
+    copyDiscountCodeBtn.addEventListener("click", async () => {
+      if (!discountCodeValue) return;
+
+      try {
+        await navigator.clipboard.writeText(discountCodeValue.textContent.trim());
+        copyDiscountCodeBtn.textContent = "Copied!";
+      } catch (error) {
+        copyDiscountCodeBtn.textContent = "Copy failed";
+      }
+    });
   }
 
   if (wheelModal) {
@@ -221,6 +245,7 @@ if (discountWheel && spinDiscountBtn && discountResult) {
       const result = offers[randomIndex];
 
       discountResult.innerHTML = `🎉 You unlocked <strong>${result.label}</strong>!`;
+      showCouponCode(result);
       spinDiscountBtn.textContent = "DISCOUNT UNLOCKED ✓";
       lockWheelAfterUse();
       resetWheelToStart();
