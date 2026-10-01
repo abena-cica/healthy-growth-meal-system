@@ -123,6 +123,15 @@ if (discountWheel && spinDiscountBtn && discountResult) {
     { label: "FREE", code: "GROWFREE" }
   ];
 
+  const savedPrizeCode = localStorage.getItem("healthyGrowthWheelPrizeCode");
+  const savedPrize = offers.find(offer => offer.code === savedPrizeCode);
+
+  if (wheelAlreadyUsed && !savedPrize) {
+    wheelAlreadyUsed = false;
+    localStorage.removeItem("healthyGrowthWheelUsed");
+    discountResult.textContent = "Your earlier code was not saved. Spin once more to restore your discount code.";
+  }
+
   function lockWheelAfterUse() {
     wheelAlreadyUsed = true;
     if (!isWheelTestMode) localStorage.setItem("healthyGrowthWheelUsed", "true");
@@ -221,8 +230,6 @@ if (discountWheel && spinDiscountBtn && discountResult) {
 
   if (wheelAlreadyUsed) {
     lockWheelAfterUse();
-    const savedCode = localStorage.getItem("healthyGrowthWheelPrizeCode");
-    const savedPrize = offers.find(offer => offer.code === savedCode);
     if (savedPrize) {
       showCouponCode(savedPrize);
       discountResult.innerHTML = `You already unlocked <strong>${savedPrize.label}</strong>.`;
