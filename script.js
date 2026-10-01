@@ -149,9 +149,6 @@ if (discountWheel && spinDiscountBtn && discountResult) {
     if (discountCodeBox) discountCodeBox.hidden = false;
     if (discountCodeValue) discountCodeValue.textContent = result.code;
   }
-  if (!enableWheelForOneClient()) {
-    return;
-  }
 
   if (closeWheelModal) {
     closeWheelModal.addEventListener("click", hideWinner);
@@ -162,41 +159,55 @@ if (discountWheel && spinDiscountBtn && discountResult) {
       if (!discountCodeValue) return;
 
       const textToCopy = discountCodeValue.textContent.trim();
+      let copied = false;
 
-      try {
-        if (navigator.clipboard && window.isSecureContext) {
+      if (navigator.clipboard && window.isSecureContext) {
+        try {
           await navigator.clipboard.writeText(textToCopy);
-        } else {
-          const tempTextArea = document.createElement("textarea");
-          tempTextArea.value = textToCopy;
-          tempTextArea.setAttribute("readonly", "");
-          tempTextArea.style.position = "fixed";
-          tempTextArea.style.top = "-9999px";
-          tempTextArea.style.left = "-9999px";
-          document.body.appendChild(tempTextArea);
-          tempTextArea.select();
-          document.execCommand("copy");
-          document.body.removeChild(tempTextArea);
+          copied = true;
+        } catch (error) {
+          copied = false;
         }
-
-        copyDiscountCodeBtn.textContent = "Copied!";
-      } catch (error) {
-        copyDiscountCodeBtn.textContent = "Copy failed";
       }
-    });
+
+      if (!copied) {
+        const tempTextArea = document.createElement("textarea");
+        tempTextArea.value = textToCopy;
+        tempTextArea.setAttribute("readonly", "");
+        tempTextArea.style.position = "fixed";
+        tempTextArea.style.top = "0";
+        tempTextArea.style.left = "0";
+        tempTextArea.style.width = "1px";
+        tempTextArea.style.height = "1px";
+        tempTextArea.style.opacity = "0";
+        document.body.appendChild(tempTextArea);
+        tempTextArea.focus();
+        tempTextArea.select();
+        tempTextArea.setSelectionRange(0, textToCopy.length);
+        copied = document.execCommand("copy");
+        document.body.removeChild(tempTextArea);
+      }
+
+      if (copied) {
+        copyDiscountCodeBtn.textContent = "Copied!";
+      } else {
+        copyDiscountCodeBtn.textContent = "Select code";
+      }
+    };
   }
 
-  if (wheelModal) {
-    wheelModal.addEventListener("click", (event) => {
-      if (event.target === wheelModal) hideWinner();
-    });
-  }
+  if (enableWheelForOneClient()) {
+    if (wheelModal) {
+      wheelModal.addEventListener("click", (event) => {
+        if (event.target === wheelModal) hideWinner();
+      });
+    }
 
-  if (wheelAlreadyUsed) {
-    lockWheelAfterUse();
-  }
+    if (wheelAlreadyUsed) {
+      lockWheelAfterUse();
+    }
 
-  spinDiscountBtn.addEventListener("click", function () {
+    spinDiscountBtn.addEventListener("click", function () {
 
     if (spinning || wheelAlreadyUsed) return;
 
@@ -227,7 +238,8 @@ if (discountWheel && spinDiscountBtn && discountResult) {
       spinning = false;
     }, 4200);
 
-  });
+    });
 
+  }
   }
 

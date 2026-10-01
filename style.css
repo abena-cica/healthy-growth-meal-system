@@ -93,6 +93,7 @@ h2{font-size:clamp(36px,4vw,52px);margin:10px 0 18px}
 .offer-popup__button:hover{transform:translateY(-1px);box-shadow:0 10px 20px rgba(172,139,212,.18);}
 .offer-popup__close{background:#f8f6fb;border:1px solid rgba(149,126,193,.12);border-radius:50%;color:#3a2d49;font-size:24px;line-height:1;cursor:pointer;padding:0 8px 2px;min-width:36px;height:36px;display:grid;place-items:center;transition:all .2s ease;}
 .offer-popup__close:hover{background:#fff;transform:scale(1.04);}
+.discount-code-box[hidden]{display:none!important;}
 .discount-code-box{margin-top:18px;padding:14px 16px;border:1px solid rgba(15,62,36,.12);border-radius:16px;background:#f5f8f3;text-align:left;display:block;}
 .discount-code-label{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#58715d;font-weight:800;margin-bottom:8px;}
 .discount-code-row{display:flex;align-items:center;justify-content:space-between;gap:12px;}
