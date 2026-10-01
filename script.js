@@ -101,6 +101,7 @@ const closeWheelModal = document.getElementById("closeWheelModal");
 const claimDiscountLink = document.getElementById("claimDiscountLink");
 const discountCodeBox = document.getElementById("discountCodeBox");
 const discountCodeValue = document.getElementById("discountCodeValue");
+const wheelBuyNowBtn = document.getElementById("wheelBuyNowBtn");
 const copyDiscountCodeBtn = document.getElementById("copyDiscountCodeBtn");
 const copyModalCouponBtn = document.getElementById("copyModalCouponBtn");
 
@@ -156,6 +157,8 @@ if (discountWheel && spinDiscountBtn && discountResult) {
   function showCouponCode(result) {
     if (discountCodeBox) discountCodeBox.hidden = false;
     if (discountCodeValue) discountCodeValue.textContent = result.code;
+    if (couponCode) couponCode.textContent = result.code;
+    if (wheelBuyNowBtn) wheelBuyNowBtn.hidden = false;
   }
 
   if (closeWheelModal) {
@@ -216,7 +219,15 @@ if (discountWheel && spinDiscountBtn && discountResult) {
     });
   }
 
-  if (wheelAlreadyUsed) lockWheelAfterUse();
+  if (wheelAlreadyUsed) {
+    lockWheelAfterUse();
+    const savedCode = localStorage.getItem("healthyGrowthWheelPrizeCode");
+    const savedPrize = offers.find(offer => offer.code === savedCode);
+    if (savedPrize) {
+      showCouponCode(savedPrize);
+      discountResult.innerHTML = `You already unlocked <strong>${savedPrize.label}</strong>.`;
+    }
+  }
 
   spinDiscountBtn.addEventListener("click", function () {
 
@@ -247,6 +258,7 @@ if (discountWheel && spinDiscountBtn && discountResult) {
         spinDiscountBtn.disabled = false;
         spinDiscountBtn.textContent = "TEST AGAIN";
       } else {
+        localStorage.setItem("healthyGrowthWheelPrizeCode", result.code);
         lockWheelAfterUse();
       }
       resetWheelToStart();
