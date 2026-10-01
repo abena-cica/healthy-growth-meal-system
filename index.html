@@ -8,26 +8,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260923-2">
+  <link rel="stylesheet" href="style.css?v=20261001-price-59">
 </head>
 <body>
 
-<div class="offer-popup" id="offerPopup" aria-live="polite">
-  <div class="offer-popup__content">
-    <div class="offer-popup__tag">A special welcome offer</div>
-    <h3>Your exciting discount is waiting!</h3>
-    <p>Spin the wheel for a chance to unlock a special price on the Healthy Growth Meal System. One spin per visitor; FREE is a rare 1% prize.</p>
-    <div class="offer-popup__actions">
-      <a href="#discountWheel" class="offer-popup__button" id="offerPopupSeeOffer">Spin for my discount</a>
-      <button type="button" class="offer-popup__close" id="closeOfferPopup" aria-label="Close offer popup">×</button>
-    </div>
-  </div>
-</div>
-
 <header class="header">
   <div class="container nav">
-    <a class="logo" href="#top">HEALTHY MEALS.BRIGHTER TOMORROWS</a>
-    <a class="nav-button" href="#discountWheel" target="_self" rel="noopener">GH₵130 • Spin to Win</a>
+    <a class="logo" href="#top">
+      <span class="logo-mark" aria-hidden="true">HG</span>
+      <span class="logo-lockup"><strong>HEALTHY GROWTH</strong><small>Meals for brighter tomorrows</small></span>
+    </a>
+    <a class="nav-button" href="#pricing">GH₵59 • Get the bundle</a>
   </div>
 </header>
 
@@ -37,38 +28,21 @@
     <div class="container hero-grid">
       <div class="hero-copy">
         <div class="badge">FOR PARENTS OF BABIES & TODDLERS • 6–36 MONTHS</div>
-        <h1>Take the guesswork out of feeding your little one.</h1>
-        <p class="lead">Know what to feed, how to build balanced meals, and how to create a simple nutritious feeding routine — without wondering what to cook every single day.</p>
+        <h1>Not sure what to feed your little one? Start with a simple plan.</h1>
+        <p class="lead">Get age-aware feeding guidance, balanced meal ideas and practical planning tools built around familiar Ghanaian foods — so you can feel more prepared at every mealtime.</p>
         <div class="hero-buttons">
-          <a class="btn primary" href="#discountWheel">GH₵130 — Spin to Unlock Your Price</a>
-          <a class="btn secondary" href="#inside">See What's Inside</a>
-        </div>
-        <div class="urgency-strip" aria-label="Urgent offer notice">
-          <span>⏳ Limited-time offer</span>
-          <span>•</span>
-          <span>Offer ends today</span>
-          <span>•</span>
-          <span>One spin per visitor</span>
-        </div>
-
-        <div class="countdown-box" aria-label="Offer countdown timer">
-          <div class="countdown-label">Offer ends in</div>
-          <div class="countdown-timer">
-            <div class="time-unit"><span id="countdown-hours">06</span><small>hrs</small></div>
-            <div class="time-unit"><span id="countdown-minutes">19</span><small>min</small></div>
-            <div class="time-unit"><span id="countdown-seconds">42</span><small>sec</small></div>
-          </div>
-        </div>
-
-        <div class="mini-trust">
-          <span>✓ Ages 6–36 months</span>
-          <span>✓ Practical & easy to use</span>
-          <span>✓ Instant digital access</span>
+          <a class="btn primary" href="#pricing">Get the system — GH₵59</a>
         </div>
       </div>
       <div class="hero-art">
         <div class="glow"></div>
         <img src="assets/flyer.png" alt="Healthy Little Eater digital product bundle">
+      </div>
+      <a class="btn secondary hero-secondary" href="#inside">See What's Inside</a>
+      <div class="mini-trust">
+        <span>✓ Ages 6–36 months</span>
+        <span>✓ Practical & easy to use</span>
+        <span>✓ Instant digital access</span>
       </div>
     </div>
   </section>
@@ -81,160 +55,8 @@
       <div><strong>4-part</strong><span>meal formula</span></div>
       <div><strong>Practical</strong><span>planning tools</span></div>
     </div>
+    <div class="container section-cta"><a class="btn primary" href="#pricing">Get the complete bundle — GH₵59</a></div>
   </section>
-
-  <!-- ================= DISCOUNT WHEEL ================= -->
-<section class="discount-wheel-section" id="discountWheel">
-
-  <div class="discount-wheel-container">
-
-    <div class="discount-wheel-heading">
-      <span class="discount-badge">🎁 LIMITED-TIME OFFER</span>
-
-      <h2>
-        <span>SPIN</span> TO UNLOCK
-        <strong>YOUR PRICE</strong>
-      </h2>
-
-    </div>
-
-    <div class="discount-wheel-content">
-
-      <!-- WHEEL -->
-      <div class="wheel-area">
-
-        <div class="wheel-pointer" aria-hidden="true"></div>
-
-        <div class="wheel-outer">
-
-          <div class="discount-wheel" id="discountWheel">
-
-            <div class="wheel-text text-1">
-              <strong>GH₵60</strong>
-              <small>ONLY</small>
-            </div>
-
-            <div class="wheel-text text-2">
-              <strong>GH₵55</strong>
-              <small>ONLY</small>
-            </div>
-
-            <div class="wheel-text text-3">
-              <strong>GH₵50</strong>
-              <small>ONLY</small>
-            </div>
-
-            <div class="wheel-text text-4">
-              <strong>FREE</strong>
-              <small>WIN</small>
-            </div>
-
-          </div>
-
-          <div class="wheel-center">
-            <span>SPIN</span>
-            <small>🎁</small>
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- OFFER CARD -->
-      <div class="discount-offer">
-
-        <div class="offer-icon">
-          🎁
-        </div>
-
-        <p class="offer-small">
-          YOUR SPECIAL OFFER
-        </p>
-
-        <h3>
-          Spin to unlock your price!
-        </h3>
-
-        <p class="offer-description">
-          Spin to unlock GH₵60, GH₵55, or GH₵50. The FREE prize has a 1% chance.
-        </p>
-
-        <button
-          type="button"
-          class="spin-discount-btn"
-          id="spinDiscountBtn"
-        >
-          🎡 SPIN FOR MY DISCOUNT
-        </button>
-
-        <div
-          class="discount-result"
-          id="discountResult"
-        ></div>
-
-        <div class="discount-code-box" id="discountCodeBox" hidden>
-          <span class="discount-code-label">Click to copy discount code</span>
-          <div class="discount-code-row">
-            <strong id="discountCodeValue">GROW60</strong>
-            <button type="button" class="copy-code-btn" id="copyDiscountCodeBtn">Copy</button>
-          </div>
-        </div>
-
-        <a
-          class="btn primary full wheel-buy-btn"
-          id="wheelBuyNowBtn"
-          href="https://www.skillspad.org/products/the-healthy-growth-meal-system-take-the-guesswork-out-of-feeding-your-baby-or-toddler"
-          target="_blank"
-          rel="noopener"
-          hidden
-        >
-          BUY NOW WITH MY DISCOUNT
-        </a>
-
-        <div class="offer-guarantee">
-          <span>✓</span>
-          One spin per visitor
-        </div>
-
-        <div class="wheel-modal" id="wheelModal" aria-hidden="true">
-          <div class="wheel-modal-card">
-            <div class="modal-confetti" aria-hidden="true">
-              <span></span><span></span><span></span><span></span><span></span>
-            </div>
-
-            <div class="modal-tag">🎉 YOUR DISCOUNT IS READY</div>
-            <h4 id="modalTitle">You unlocked GH₵40 OFF!</h4>
-
-            <div class="coupon-box">
-              <span>Use code</span>
-              <strong id="couponCode">GROW40</strong>
-            </div>
-            <button type="button" class="copy-code-btn modal-copy-code-btn" id="copyModalCouponBtn">Copy discount code</button>
-
-            <p>Claim your savings before this offer expires today.</p>
-
-            <a
-              class="btn primary full"
-              id="claimDiscountLink"
-              href="https://www.skillspad.org/products/the-healthy-growth-meal-system-take-the-guesswork-out-of-feeding-your-baby-or-toddler"
-              target="_blank"
-              rel="noopener"
-            >
-              CLAIM MY DISCOUNT
-            </a>
-
-            <button type="button" class="modal-close" id="closeWheelModal">Close</button>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
 
   <!-- PROBLEM -->
   <section class="section problem">
@@ -249,10 +71,9 @@
         <div class="problem-item"><span>03</span><p>Your child refuses foods and you don't know what to do next.</p></div>
         <div class="problem-item"><span>04</span><p>You keep repeating the same meals because planning feels overwhelming.</p></div>
       </div>
+      <div class="section-cta"><a class="btn primary" href="#pricing">Get the complete bundle — GH₵59</a></div>
     </div>
   </section>
-<div style="text-align:center;margin:32px 0 0;"><a class="btn primary" href="https://www.skillspad.org/products/the-healthy-growth-meal-system-take-the-guesswork-out-of-feeding-your-baby-or-toddler" target="_blank" rel="noopener">READY TO MAKE MEAL PLANNING EASIER? <b>→</b></a></div>
-
   <!-- SOLUTION -->
   <section class="section solution">
     <div class="container centered">
@@ -269,6 +90,38 @@
         <i>+</i>
         <div><b>04</b><strong>FRUIT / VEG</strong><small>Colour • variety • nutrients</small></div>
       </div>
+      <div class="section-cta"><a class="btn primary" href="#pricing">Get the complete bundle — GH₵59</a></div>
+    </div>
+  </section>
+
+  <!-- SAMPLE REVIEWS -->
+  <section class="section testimonials" aria-labelledby="reviews-title">
+    <div class="container">
+      <div class="review-heading">
+        <p class="eyebrow">CAREGIVER STORIES</p>
+        <h2 id="reviews-title">Small steps toward calmer mealtimes.</h2>
+      </div>
+      <div class="review-grid">
+        <article class="review-card">
+          <p class="review-label">SAMPLE · GHANAIAN MOTHER</p>
+          <div class="review-stars" aria-label="Sample five-star rating">★★★★★</div>
+          <blockquote>“I used to wonder if my baby's meals were balanced. The simple meal formula gives me an easy starting point with familiar foods from home.”</blockquote>
+          <p class="review-byline">Kumasi</p>
+        </article>
+        <article class="review-card">
+          <p class="review-label">SAMPLE · MOTHER & CAREGIVER</p>
+          <div class="review-stars" aria-label="Sample five-star rating">★★★★★</div>
+          <blockquote>“The planner helps me think ahead about meals and shopping instead of deciding everything at the last minute.”</blockquote>
+          <p class="review-byline">Accra</p>
+        </article>
+        <article class="review-card">
+          <p class="review-label">SAMPLE · GHANAIAN CAREGIVER</p>
+          <div class="review-stars" aria-label="Sample five-star rating">★★★★★</div>
+          <blockquote>“I like having ideas grouped by age. It makes planning for my toddler feel clearer and easier to fit into our family routine.”</blockquote>
+          <p class="review-byline">Cape Coast</p>
+        </article>
+      </div>
+      <div class="section-cta"><a class="btn primary" href="#pricing">Get the complete bundle — GH₵59</a></div>
     </div>
   </section>
 
@@ -309,6 +162,7 @@
           <span>25 PROMPTS</span>
         </article>
       </div>
+      <div class="section-cta"><a class="btn primary" href="#pricing">Get the complete bundle — GH₵59</a></div>
     </div>
   </section>
 
@@ -325,10 +179,9 @@
         <div class="benefit"><div class="icon">⌁</div><h3>Save time</h3><p>Use meal prep and planning tools to make nutritious feeding more realistic.</p></div>
         <div class="benefit"><div class="icon">+</div><h3>Build variety</h3><p>Rotate proteins, grains, fruits and vegetables instead of repeating the same meals.</p></div>
       </div>
+      <div class="section-cta"><a class="btn primary" href="#pricing">Get the complete bundle — GH₵59</a></div>
     </div>
   </section>
-<div style="text-align:center;margin:32px 0 0;"><a class="btn primary" href="https://www.skillspad.org/products/the-healthy-growth-meal-system-take-the-guesswork-out-of-feeding-your-baby-or-toddler" target="_blank" rel="noopener">START YOUR WEEK WITH A PLAN <b>→</b></a></div>
-
   <!-- HOW IT WORKS -->
   <section class="section steps">
     <div class="container">
@@ -342,6 +195,7 @@
         <div class="step"><b>3</b><h3>Plan & rotate</h3><p>Use the planners and prompts to create variety without making life complicated.</p></div>
         <div class="step"><b>4</b><h3>Review</h3><p>Look at feeding patterns and routines rather than chasing perfection.</p></div>
       </div>
+      <div class="section-cta"><a class="btn primary" href="#pricing">Get the complete bundle — GH₵59</a></div>
     </div>
   </section>
 
@@ -356,17 +210,16 @@
       <div class="food-cloud">
         <span>Rice</span><span>Yam</span><span>Plantain</span><span>Beans</span><span>Egg</span><span>Fish</span><span>Avocado</span><span>Banana</span><span>Vegetables</span>
       </div>
+      <div class="section-cta"><a class="btn primary" href="#pricing">Get the complete bundle — GH₵59</a></div>
     </div>
   </section>
-<div style="text-align:center;margin:32px 0 0;"><a class="btn primary" href="https://www.skillspad.org/products/the-healthy-growth-meal-system-take-the-guesswork-out-of-feeding-your-baby-or-toddler" target="_blank" rel="noopener">BUILD YOUR MEALS WITH LESS GUESSWORK <b>→</b></a></div>
-
   <!-- PRICING -->
   <section id="pricing" class="section pricing">
     <div class="container price-card">
       <div class="price-copy">
-        <p class="eyebrow">GET THE COMPLETE BUNDLE</p>
-        <h2>Make your next meal easier to plan.</h2>
-        <p>Get the complete digital toolkit and start using the system today.</p>
+        <p class="eyebrow">YOUR COMPLETE MEAL-PLANNING TOOLKIT</p>
+        <h2>Bring more confidence to every mealtime.</h2>
+        <p>One practical digital bundle for feeding guidance, balanced meal ideas and planning support — designed for real family routines.</p>
         <ul>
           <li>✓ Core Healthy Growth Meal System</li>
           <li>✓ Fillable Healthy Little Eater Planner</li>
@@ -376,10 +229,10 @@
         </ul>
       </div>
       <div class="price-box">
-        <p>ONE-TIME PRICE</p>
-        <div class="price">GH₵130</div>
-        <small>No subscription. Digital product.</small>
-        <a class="btn primary full" href="https://www.skillspad.org/products/the-healthy-growth-meal-system-take-the-guesswork-out-of-feeding-your-baby-or-toddler">GET THE COMPLETE BUNDLE</a>
+        <p>THE COMPLETE BUNDLE</p>
+        <div class="price">GH₵59</div>
+        <small>One-time payment. Instant digital access.</small>
+        <a class="btn primary full" href="https://www.skillspad.org/products/the-healthy-growth-meal-system-take-the-guesswork-out-of-feeding-your-baby-or-toddler">GET THE COMPLETE BUNDLE — GH₵59</a>
         <div class="secure">🔒 Secure checkout • Instant access</div>
       </div>
     </div>
@@ -399,17 +252,16 @@
         <div class="faq-item"><button>Does it guarantee weight gain?<span>+</span></button><div class="faq-answer">No. It is an educational feeding and meal-planning resource, not a medical treatment or guarantee of weight gain. If you have concerns about your child's growth, feeding, allergies or a medical condition, seek advice from a qualified healthcare professional.</div></div>
         <div class="faq-item"><button>How do I receive the product?<span>+</span></button><div class="faq-answer">After checkout, you receive access to the digital resources. You can use them on your phone, tablet or computer.</div></div>
       </div>
+      <div class="section-cta"><a class="btn primary" href="#pricing">Get the complete bundle — GH₵59</a></div>
     </div>
   </section>
-<div style="text-align:center;margin:32px 0 0;"><a class="btn primary" href="https://www.skillspad.org/products/the-healthy-growth-meal-system-take-the-guesswork-out-of-feeding-your-baby-or-toddler" target="_blank" rel="noopener">READY TO GET STARTED? <b>→</b></a></div>
-
   <!-- FINAL CTA -->
   <section class="final-cta">
     <div class="container centered">
-      <p class="eyebrow">READY TO MAKE FEEDING SIMPLER?</p>
-      <h2>Healthy meals don't have to mean complicated planning.</h2>
-      <p>Get your Healthy Growth Meal System today and take the guesswork out of everyday feeding.</p>
-      <a class="btn yellow" href="https://www.skillspad.org/products/the-healthy-growth-meal-system-take-the-guesswork-out-of-feeding-your-baby-or-toddler">GET THE COMPLETE BUNDLE — GH₵130</a>
+      <p class="eyebrow">A MORE CONFIDENT MEALTIME STARTS HERE</p>
+      <h2>Make your next meal feel easier.</h2>
+      <p>Use a practical system to plan balanced meals around your child's age and the foods your family knows.</p>
+      <a class="btn yellow" href="https://www.skillspad.org/products/the-healthy-growth-meal-system-take-the-guesswork-out-of-feeding-your-baby-or-toddler">GET THE COMPLETE BUNDLE — GH₵59</a>
     </div>
   </section>
 </main>
@@ -421,6 +273,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=20261001-mobile-code-recovery"></script>
+<script src="script.js?v=20261001-price-59"></script>
 </body>
 </html>

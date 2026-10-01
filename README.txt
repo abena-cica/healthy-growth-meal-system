@@ -17,7 +17,7 @@ Search index.html for:
 https://www.skillspad.org/products/the-healthy-growth-meal-system-take-the-guesswork-out-of-feeding-your-baby-or-toddler
 
 TO CHANGE THE PRICE:
-Search for GH₵130.
+Search for GH₵59.
 
 TO CHANGE THE MAIN IMAGE:
 Replace assets/flyer.png with another image, keeping the same filename.
