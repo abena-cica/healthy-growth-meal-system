@@ -31,6 +31,34 @@ document.querySelectorAll('.product-card, .benefit, .step, .problem-item').forEa
   observer.observe(el);
 });
 
+const offerPopup = document.getElementById('offerPopup');
+const closeOfferPopup = document.getElementById('closeOfferPopup');
+const offerPopupSeeOffer = document.getElementById('offerPopupSeeOffer');
+const discountWheelSection = document.getElementById('discountWheel');
+
+if (offerPopup) {
+  const closeOffer = () => {
+    offerPopup.classList.remove('show');
+    document.body.classList.remove('offer-popup-open');
+  };
+
+  offerPopup.classList.add('show');
+  document.body.classList.add('offer-popup-open');
+
+  if (closeOfferPopup) closeOfferPopup.addEventListener('click', closeOffer);
+  if (offerPopupSeeOffer) offerPopupSeeOffer.addEventListener('click', closeOffer);
+  offerPopup.addEventListener('click', event => {
+    if (event.target === offerPopup) closeOffer();
+  });
+
+  if (discountWheelSection) {
+    const popupWheelObserver = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) closeOffer();
+    }, { threshold: 0.2 });
+    popupWheelObserver.observe(discountWheelSection);
+  }
+}
+
 
 const countdownHours = document.getElementById('countdown-hours');
 const countdownMinutes = document.getElementById('countdown-minutes');
@@ -78,33 +106,13 @@ const copyDiscountCodeBtn = document.getElementById("copyDiscountCodeBtn");
 if (discountWheel && spinDiscountBtn && discountResult) {
 
   const segmentCenterAngles = [45, 135, 225, 315];
+  const wheelTestMode = new URLSearchParams(window.location.search).get('wheelTest');
+  const isWheelTestMode = wheelTestMode === '1' || wheelTestMode === 'free';
+  const forceFreeResult = wheelTestMode === 'free';
 
   let spinning = false;
   let currentRotation = 0;
-  let wheelAlreadyUsed = localStorage.getItem("healthyGrowthWheelUsed") === "true";
-  const oneClientAccessCode = "ONE_CLIENT_ACCESS";
-
-  const enableWheelForOneClient = () => {
-    const activationKey = "healthyGrowthWheelAccessEnabled";
-    const isEnabled = localStorage.getItem(activationKey) === "true";
-
-    if (isEnabled) return true;
-
-    const response = window.prompt(
-      "To enable this discount wheel for one client only, type: ONE_CLIENT_ACCESS",
-      ""
-    );
-
-    if (response && response.trim().toUpperCase() === oneClientAccessCode) {
-      localStorage.setItem(activationKey, "true");
-      return true;
-    }
-
-    spinDiscountBtn.disabled = true;
-    spinDiscountBtn.textContent = "ACCESS LOCKED";
-    discountResult.textContent = "Admin access required before this wheel can be used.";
-    return false;
-  };
+  let wheelAlreadyUsed = !isWheelTestMode && localStorage.getItem("healthyGrowthWheelUsed") === "true";
 
   const offers = [
     { label: "GH₵60", code: "GROW60" },
@@ -115,10 +123,9 @@ if (discountWheel && spinDiscountBtn && discountResult) {
 
   function lockWheelAfterUse() {
     wheelAlreadyUsed = true;
-    localStorage.setItem("healthyGrowthWheelUsed", "true");
+    if (!isWheelTestMode) localStorage.setItem("healthyGrowthWheelUsed", "true");
     spinDiscountBtn.disabled = true;
     spinDiscountBtn.textContent = "DISCOUNT UNLOCKED ✓";
-    discountResult.textContent = "You already unlocked your discount.";
   }
 
   function resetWheelToStart() {
@@ -196,18 +203,15 @@ if (discountWheel && spinDiscountBtn && discountResult) {
     };
   }
 
-  if (enableWheelForOneClient()) {
-    if (wheelModal) {
-      wheelModal.addEventListener("click", (event) => {
-        if (event.target === wheelModal) hideWinner();
-      });
-    }
+  if (wheelModal) {
+    wheelModal.addEventListener("click", (event) => {
+      if (event.target === wheelModal) hideWinner();
+    });
+  }
 
-    if (wheelAlreadyUsed) {
-      lockWheelAfterUse();
-    }
+  if (wheelAlreadyUsed) lockWheelAfterUse();
 
-    spinDiscountBtn.addEventListener("click", function () {
+  spinDiscountBtn.addEventListener("click", function () {
 
     if (spinning || wheelAlreadyUsed) return;
 
@@ -218,7 +222,8 @@ if (discountWheel && spinDiscountBtn && discountResult) {
 
     discountResult.textContent = "Spinning... 🎉";
 
-    const randomIndex = Math.floor(Math.random() * offers.length);
+    const freePrizeWon = forceFreeResult || Math.random() < 0.01;
+    const randomIndex = freePrizeWon ? 3 : Math.floor(Math.random() * 3);
     const selectedAngle = segmentCenterAngles[randomIndex];
     const pointerAngle = 270;
     const targetAngle = ((pointerAngle - selectedAngle) % 360 + 360) % 360;
@@ -231,15 +236,18 @@ if (discountWheel && spinDiscountBtn && discountResult) {
 
       discountResult.innerHTML = `🎉 You unlocked <strong>${result.label}</strong>!`;
       showCouponCode(result);
-      spinDiscountBtn.textContent = "DISCOUNT UNLOCKED ✓";
-      lockWheelAfterUse();
+      if (isWheelTestMode) {
+        spinDiscountBtn.disabled = false;
+        spinDiscountBtn.textContent = "TEST AGAIN";
+      } else {
+        lockWheelAfterUse();
+      }
       resetWheelToStart();
       showWinner(result);
       spinning = false;
     }, 4200);
 
-    });
+  });
 
-  }
-  }
+}
 
