@@ -102,6 +102,7 @@ const claimDiscountLink = document.getElementById("claimDiscountLink");
 const discountCodeBox = document.getElementById("discountCodeBox");
 const discountCodeValue = document.getElementById("discountCodeValue");
 const copyDiscountCodeBtn = document.getElementById("copyDiscountCodeBtn");
+const copyModalCouponBtn = document.getElementById("copyModalCouponBtn");
 
 if (discountWheel && spinDiscountBtn && discountResult) {
 
@@ -161,47 +162,53 @@ if (discountWheel && spinDiscountBtn && discountResult) {
     closeWheelModal.addEventListener("click", hideWinner);
   }
 
-  if (copyDiscountCodeBtn) {
-    copyDiscountCodeBtn.onclick = async () => {
-      if (!discountCodeValue) return;
+  const copyButtons = [copyDiscountCodeBtn, copyModalCouponBtn].filter(Boolean);
+  const copyDiscountCode = async () => {
+    if (!discountCodeValue) return;
 
-      const textToCopy = discountCodeValue.textContent.trim();
-      let copied = false;
+    const textToCopy = discountCodeValue.textContent.trim();
+    let copied = false;
 
-      if (navigator.clipboard && window.isSecureContext) {
-        try {
-          await navigator.clipboard.writeText(textToCopy);
-          copied = true;
-        } catch (error) {
-          copied = false;
-        }
+    if (navigator.clipboard && window.isSecureContext) {
+      try {
+        await navigator.clipboard.writeText(textToCopy);
+        copied = true;
+      } catch (error) {
+        copied = false;
       }
+    }
 
-      if (!copied) {
-        const tempTextArea = document.createElement("textarea");
-        tempTextArea.value = textToCopy;
-        tempTextArea.setAttribute("readonly", "");
-        tempTextArea.style.position = "fixed";
-        tempTextArea.style.top = "0";
-        tempTextArea.style.left = "0";
-        tempTextArea.style.width = "1px";
-        tempTextArea.style.height = "1px";
-        tempTextArea.style.opacity = "0";
-        document.body.appendChild(tempTextArea);
-        tempTextArea.focus();
-        tempTextArea.select();
-        tempTextArea.setSelectionRange(0, textToCopy.length);
+    if (!copied) {
+      const tempTextArea = document.createElement("textarea");
+      tempTextArea.value = textToCopy;
+      tempTextArea.setAttribute("readonly", "");
+      tempTextArea.style.position = "fixed";
+      tempTextArea.style.top = "0";
+      tempTextArea.style.left = "0";
+      tempTextArea.style.width = "1px";
+      tempTextArea.style.height = "1px";
+      tempTextArea.style.opacity = "0";
+      document.body.appendChild(tempTextArea);
+      tempTextArea.focus();
+      tempTextArea.select();
+      tempTextArea.setSelectionRange(0, textToCopy.length);
+      try {
         copied = document.execCommand("copy");
+      } catch (error) {
+        copied = false;
+      } finally {
         document.body.removeChild(tempTextArea);
       }
+    }
 
-      if (copied) {
-        copyDiscountCodeBtn.textContent = "Copied!";
-      } else {
-        copyDiscountCodeBtn.textContent = "Select code";
-      }
-    };
-  }
+    copyButtons.forEach(button => {
+      button.textContent = copied ? "Copied!" : "Select code";
+    });
+  };
+
+  copyButtons.forEach(button => {
+    button.addEventListener("click", copyDiscountCode);
+  });
 
   if (wheelModal) {
     wheelModal.addEventListener("click", (event) => {
